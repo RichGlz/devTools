@@ -28,44 +28,7 @@ El nuevo comando de *Angular CLI* para agregar estos paquetes.
 ng add @angular/fire
 ```
 
-## 4. Instalar Bootstrap
-
-El nuevo comando de *Angular CLI* para agregar estos paquetes.
-
-``` shell
-npm i jquery bootstrap @popperjs/core --save
-```
-
-### 4.1 Instalar boostrap `angular.json`
-
-**Antes:**
-
-``` ts
-...
-  "styles": [
-  "src/styles.scss"
-  ],
-  "scripts": []
-...
-```
-
-**Después:**
-
-``` ts
-...
-  "styles": [
-  "src/styles.scss",
-  "./node_modules/bootstrap/dist/css/bootstrap.min.css"
-  ],
-  "scripts": [
-    "./node_modules/jquery/dist/jquery.slim.min.js",
-    "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-    "./node_modules/popper.js/dist/umd/popper.min.js"
-  ]
-...
-```
-
-## 5. Agregar la configuración en el archivo `environments.ts`
+## 4. Agregar la configuración en el archivo `environments.ts`
 
 Dentro de `src/environments/environments.ts` :
 
@@ -101,7 +64,7 @@ Dentro de `src/environments/environments.ts` :
 
 > Sustitúyela con tu propia información desde la [Consola de firebase](https://console.firebase.google.com/u/0).
 
-## 6. Configurar `@NgModule` para el `AngularFireModule` :
+## 5. Configurar `@NgModule` para el `AngularFireModule` :
 
 Open `/src/app/app.module.ts`, inyecta los proveedores de Firebase, y especifica tu configuración de Firebase.
 
@@ -144,7 +107,7 @@ import { environment } from '../environments/environment';
 export class AppModule {}
 ```
 
-## 7. Aplica *Data binding* desde la colección de Firestore a una lista
+## 6. Aplica *Data binding* desde la colección de Firestore a una lista
 
 **TypeScript** - En el componente: `/src/app/app.component.ts` :
 
@@ -195,7 +158,7 @@ export class AppComponent {
 
 >También puedes descargar esta [plantilla HTML](https://github.com/RichGlz/AnguBase-project/blob/master/src/app/app.component.html) con **Bootstrap** para que se vea mejor tu proyecto.
 
-## 8. Ejecuta el servidor:
+## 7. Ejecuta el servidor:
 
 ``` shell
 ng serve
