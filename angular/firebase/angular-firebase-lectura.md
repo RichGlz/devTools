@@ -151,7 +151,7 @@ export class AppComponent {
 </ul>
 ```
 
->Si ya tienes instalado **Bootstrap** en tu proyecto, puedes agregar esta [plantilla HTML](https://github.com/RichGlz/AnguBase-project/blob/master/src/app/app.component.html) a tu proyecto para que se vea mejor. 
+> Si ya tienes instalado **Bootstrap**, puedes agregar esta [plantilla](https://github.com/RichGlz/devTools/blob/main/angular/firebase/plantilla-sencilla/plantilla1.md) a tu proyecto para que se vea mejor.
 
 ## 5. Iniciar el servidor
 
