@@ -32,7 +32,7 @@ npm i jquery bootstrap @popperjs/core --save
   "scripts": [
     "./node_modules/jquery/dist/jquery.slim.min.js",
     "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-    "./node_modules/popper.js/dist/umd/popperjs.min.js"
+    "./node_modules/@popperjs/core/dist/umd/popper.min.js"
   ]
 ...
 ```
