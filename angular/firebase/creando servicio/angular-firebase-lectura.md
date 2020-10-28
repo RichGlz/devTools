@@ -1,4 +1,4 @@
-# Angular con lectura Firebase (Guía rápida)
+# Angular con servicio y lectura de IDs en Firebase (Guía rápida)
 
 Basado en la [documentación](https://github.com/angular/angularfire/blob/master/docs/install-and-setup.md) oficial de angularfire.
 
@@ -96,6 +96,69 @@ import { environment } from '../environments/environment';
 export class AppModule {}
 ```
 
+## 4. Crear el servicio
+
+### 1. Detener el servidor presionando `ctrl + C` en, por lo mejor, dos ocasiones
+
+### 2. Crea un servicio con comando
+
+> Para este se considera usando el comando, aunque también se podría hacer manualmente.
+
+> Se recomienda hacer una carpeta llamada 'services', para mantener más ordenado el código.
+
+``` md
+ng g s services/fsConfig
+```
+
+> Opcional: Borrar el archivo generado `fs-config.service.spec.ts` *(archivo de pruebas)*.
+
+## 5. Configurar el servicio (sin lectura de IDs)
+
+``` jsx
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+/*
+//Activar para la clase map para Lecturas de IDs
+import { map } from 'rxjs/operators';
+*/
+export interface Item { name: string; }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FsConfigService {
+
+  private itemsCollection: AngularFirestoreCollection<Item>;
+  items: Observable<Item[]>;
+
+  // ----- Constructor SIN lectura de IDs -----
+  constructor(private db: AngularFirestore) {
+    this.itemsCollection = db.collection<Item>('items');
+    this.items = this.itemsCollection.valueChanges();
+  }
+
+  /*
+  // ----- Constructor CON lectura de IDs -----
+
+  constructor(private db: AngularFirestore) {
+    this.itemsCollection = db.collection<Item>('items');
+    this.items = this.itemsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Item;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+  */
+
+  getItems(): any {
+    return this.items;
+  }
+}
+```
+
 ## 4. Aplica *Data binding* desde la colección de Firestore a una lista
 
 **TypeScript** - En el componente: `/src/app/app.component.ts` :
@@ -119,36 +182,24 @@ export class AppComponent {
 
 ``` jsx
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { FsConfigService } from './services/fs-config.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  // Se declara 'items', que es donde se almacenarán los datos provenientes de la Base de datos.
-  items: Observable<any[]>;
+  title = 'AnguFirestore';
+  version = 'v2.0';
+  items: any;
 
-  constructor(db: AngularFirestore) {
-    // 'items' es el nombre de la colección dentro de la base de datos de Firestore (no confundir con la variable 'this.items').
-    this.items = db.collection('items').valueChanges();
+  constructor(private config: FsConfigService){
+    this.config.getItems().subscribe( item => {
+      this.items = item;
+      console.log(this.items);
+    });
   }
-
-  /*
-  // ----- Constructor CON lectura de IDs -----
-  constructor(private db: AngularFirestore) {
-    this.itemsCollection = db.collection<Item>('items');
-    this.items = this.itemsCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Item;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-  }
-  */
 }
 ```
 
@@ -158,13 +209,19 @@ export class AppComponent {
 
 ``` html
 <ul>
-  <li class="text" *ngFor="let item of items | async">
+  <li
+    *ngFor="let item of items"
+    class="text">
+
+    <!-- Descomente para lectura de IDs -->
+    <!-- {{ item.id }} - -->
+
     {{item.name}}
   </li>
 </ul>
 ```
 
-> Si ya tienes instalado **Bootstrap**, puedes agregar esta [plantilla](https://github.com/RichGlz/devTools/blob/main/angular/firebase/plantilla-sencilla/plantilla1.md) a tu proyecto para que se vea mejor.
+> Si ya tienes instalado **Bootstrap**, puedes agregar esta [plantilla](https://github.com/RichGlz/devTools/blob/main/angular/firebase/plantilla-sencilla/plantilla1.md) a tu proyecto para que se vea mejor 👌🏻.
 
 ## 5. Iniciar el servidor
 
