@@ -118,10 +118,9 @@ ng g s services/fsConfig
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-/*
-//Activar para la clase map para Lecturas de IDs
-import { map } from 'rxjs/operators';
-*/
+/* //Activar para la clase map para Lecturas de IDs
+import { map } from 'rxjs/operators'; */
+
 export interface Item { name: string; }
 
 @Injectable({
@@ -129,7 +128,9 @@ export interface Item { name: string; }
 })
 export class FsConfigService {
 
-  private itemsCollection: AngularFirestoreCollection<Item>;
+  /* //Activar para la clase map para Lecturas de IDs
+  private itemsCollection: AngularFirestoreCollection<Item>; */
+
   items: Observable<Item[]>;
 
   // ----- Constructor SIN lectura de IDs -----

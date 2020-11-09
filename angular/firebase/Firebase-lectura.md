@@ -121,6 +121,9 @@ export class AppComponent {
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+/* //Activar para la clase map para Lecturas de IDs
+import { map } from 'rxjs/operators'; */
+
 
 @Component({
   selector: 'app-root',
@@ -132,6 +135,10 @@ export class AppComponent {
   items: Observable<any[]>;
 
   constructor(db: AngularFirestore) {
+
+    /* //Activar para la clase map para Lecturas de IDs
+    private itemsCollection: AngularFirestoreCollection<Item>; */
+
     // 'items' es el nombre de la colección dentro de la base de datos de Firestore (no confundir con la variable 'this.items').
     this.items = db.collection('items').valueChanges();
   }
